@@ -25,10 +25,13 @@ jobs:
         run: ./scripts/build_windows.ps1
       - uses: actions/upload-artifact@v4
         with:
-          name: LegalMask-Windows
-          path: |
-            dist/LegalMask-Windows-x64.zip
-            dist/installer/LegalMask-Windows-x64-Setup.exe
+          name: LegalMask-Windows-Portable
+          path: dist/LegalMask-Windows-x64.zip
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LegalMask-Windows-Setup
+          path: dist/installer/LegalMask-Windows-x64-Setup.exe
           if-no-files-found: error
 
   macos:
@@ -71,5 +74,10 @@ jobs:
           merge-multiple: true
       - uses: softprops/action-gh-release@v2
         with:
-          files: release-assets/*
+          files: |
+            release-assets/LegalMask-Windows-x64-Setup.exe
+            release-assets/LegalMask-Windows-x64.zip
+            release-assets/LegalMask-macOS-AppleSilicon.zip
+            release-assets/LegalMask-macOS-Intel.zip
+          fail_on_unmatched_files: true
           generate_release_notes: true
