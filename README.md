@@ -1,7 +1,7 @@
 # LegalMask — 中文法律文书智能脱敏工具
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
+[![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/built%20with-Streamlit-ff4b4b.svg)](https://streamlit.io/)
 
 将含真实当事人信息的法律文书脱敏后安全提交 AI 分析，分析结果可一键还原为真实姓名。**完全本地运行，数据不出本机。**
@@ -26,12 +26,34 @@
 
 ## 快速开始
 
+普通用户请直接前往 [最新版本下载页](https://github.com/guoba371/LegalMask/releases/latest)：
+
+- Windows 10/11：下载 `LegalMask-Windows-x64-Setup.exe`，安装后双击启动
+- macOS 12+：Apple Silicon 或 Intel 版本任选其一，解压后打开 `LegalMask.app`
+- 不需要安装 Python，也不需要打开命令行
+
+### 源码运行
+
 ```bash
 pip install -r requirements.txt
-streamlit run app.py
+python main.py
 ```
 
-浏览器自动打开 `http://localhost:8501`
+### 构建桌面安装包
+
+```powershell
+# Windows
+.\scripts\build_windows.ps1
+```
+
+```bash
+# macOS
+./scripts/build_macos.sh
+```
+
+Windows 构建需要安装 Inno Setup 6。macOS 构建需在 macOS 上执行，并显式设置
+`MACOSX_DEPLOYMENT_TARGET=12.0`；仓库的 GitHub Actions 会分别生成 Apple Silicon
+和 Intel 安装包。
 
 ---
 
@@ -118,10 +140,11 @@ restored = restore_text(ai_analysis_text, mapping)
 
 ## 技术栈
 
-- Python 3.10+
+- Python 3.12
 - Streamlit（UI）
 - python-docx（DOCX 处理）
 - PyMuPDF / pdfplumber（PDF 处理）
+- pywebview（Windows WebView2 / macOS WKWebView）
 
 ---
 

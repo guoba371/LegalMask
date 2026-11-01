@@ -708,6 +708,140 @@ a {
   background: rgba(255, 253, 248, 0.1);
 }
 
+.download-panel {
+  align-self: center;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.download-card {
+  position: relative;
+  min-height: 142px;
+  padding: 23px 52px 21px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: rgba(255, 253, 248, 0.08);
+  border: 1px solid rgba(255, 253, 248, 0.18);
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.download-card:hover {
+  transform: translateY(-3px);
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--ink);
+}
+
+.download-card-wide {
+  grid-column: 1 / -1;
+  min-height: 132px;
+  background: var(--red);
+  border-color: var(--red);
+}
+
+.download-card-wide:hover {
+  background: var(--red-dark);
+  border-color: var(--red-dark);
+  color: var(--white);
+}
+
+.download-kicker {
+  margin-bottom: auto;
+  color: rgba(255, 253, 248, 0.52);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+}
+
+.download-card:hover .download-kicker {
+  color: var(--red-dark);
+}
+
+.download-card-wide:hover .download-kicker {
+  color: rgba(255, 253, 248, 0.65);
+}
+
+.download-card strong {
+  margin-top: 23px;
+  font-family: var(--serif);
+  font-size: 20px;
+  letter-spacing: -0.4px;
+}
+
+.download-card small {
+  margin-top: 7px;
+  color: rgba(255, 253, 248, 0.57);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.download-card:hover small {
+  color: var(--ink-soft);
+}
+
+.download-card-wide:hover small {
+  color: rgba(255, 253, 248, 0.7);
+}
+
+.download-arrow {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  font-size: 22px;
+  transition: transform 180ms ease;
+}
+
+.download-card:hover .download-arrow {
+  transform: translateY(3px);
+}
+
+.download-help {
+  grid-column: 1 / -1;
+  padding: 17px 19px;
+  border-left: 2px solid var(--red);
+  background: rgba(0, 0, 0, 0.14);
+  color: rgba(255, 253, 248, 0.62);
+  font-size: 11px;
+  line-height: 1.75;
+}
+
+.download-help p {
+  margin: 0;
+}
+
+.download-help p + p {
+  margin-top: 7px;
+  color: rgba(255, 253, 248, 0.43);
+}
+
+.download-help strong {
+  color: var(--white);
+}
+
+.download-links {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-top: 4px;
+  font-size: 10px;
+}
+
+.download-links a {
+  padding-bottom: 3px;
+  border-bottom: 1px solid rgba(255, 253, 248, 0.3);
+  color: rgba(255, 253, 248, 0.57);
+}
+
+.download-links a:hover {
+  color: var(--white);
+  border-color: var(--white);
+}
+
 .terminal {
   align-self: center;
   min-width: 0;
@@ -1011,6 +1145,16 @@ a {
 
   .start-actions .button {
     width: 100%;
+  }
+
+  .download-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .download-card-wide,
+  .download-help,
+  .download-links {
+    grid-column: auto;
   }
 
   .terminal pre {

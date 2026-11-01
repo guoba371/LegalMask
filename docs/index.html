@@ -28,7 +28,7 @@
     <nav class="site-nav" aria-label="主导航">
       <a href="#features">能力</a>
       <a href="#workflow">流程</a>
-      <a href="#start">开始使用</a>
+      <a href="#start">下载</a>
     </nav>
     <a class="nav-github" href="https://github.com/guoba371/LegalMask" aria-label="查看 GitHub 源码">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .8a11.2 11.2 0 0 0-3.5 21.8c.6.1.8-.2.8-.5v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.2 11.2 0 0 1 6 0C17.5 4.3 18.5 4.6 18.5 4.6c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.1c0 .3.2.6.8.5A11.2 11.2 0 0 0 12 .8Z"/></svg>
@@ -43,11 +43,11 @@
         <h1>把敏感信息<br>留在<em>你的电脑里。</em></h1>
         <p class="hero-lead">LegalMask 为中文法律文书提供可逆脱敏。自动识别姓名、案号、地址与证件信息，也支持扫描版 PDF 和人工补充字段。</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="https://github.com/guoba371/LegalMask/archive/refs/heads/main.zip">
-            下载 LegalMask
+          <a class="button button-primary" href="#start">
+            下载桌面版
             <span aria-hidden="true">↘</span>
           </a>
-          <a class="button button-secondary" href="#start">查看运行方式</a>
+          <a class="button button-secondary" href="#workflow">查看使用流程</a>
         </div>
         <ul class="trust-list" aria-label="产品特点">
           <li><span>✓</span> 文件不上传</li>
@@ -174,25 +174,40 @@
       <div class="start-card">
         <div class="start-copy">
           <p class="section-index">03 / GET STARTED</p>
-          <h2>在你的电脑上运行。</h2>
-          <p>GitHub Pages 仅承载这个项目介绍页。LegalMask 是本地 Streamlit 应用，扫描件和原始文书不会进入浏览器之外的服务器。</p>
+          <h2>下载后，<br>双击就能用。</h2>
+          <p>不需要安装 Python，也不需要打开命令行。选择你的系统下载，文件和 OCR 始终只在本机处理。</p>
           <div class="start-actions">
-            <a class="button button-light" href="https://github.com/guoba371/LegalMask/archive/refs/heads/main.zip">下载源码 ZIP <span>↘</span></a>
-            <a class="button button-ghost" href="https://github.com/guoba371/LegalMask">浏览仓库</a>
+            <a class="button button-light" href="https://github.com/guoba371/LegalMask/releases/latest/download/LegalMask-Windows-x64-Setup.exe">Windows 安装版 <span>↓</span></a>
+            <a class="button button-ghost" href="#macos">macOS 版本</a>
           </div>
         </div>
-        <div class="terminal" aria-label="本地运行命令">
-          <div class="terminal-bar">
-            <span></span><span></span><span></span>
-            <p>PowerShell</p>
+        <div class="download-panel" id="macos">
+          <a class="download-card download-card-wide" href="https://github.com/guoba371/LegalMask/releases/latest/download/LegalMask-Windows-x64-Setup.exe">
+            <span class="download-kicker">WINDOWS 10 / 11 · 64 位</span>
+            <strong>Windows 安装版</strong>
+            <small>下载后双击安装，从桌面或开始菜单启动</small>
+            <span class="download-arrow" aria-hidden="true">↓</span>
+          </a>
+          <a class="download-card" href="https://github.com/guoba371/LegalMask/releases/latest/download/LegalMask-macOS-AppleSilicon.zip">
+            <span class="download-kicker">APPLE 芯片</span>
+            <strong>Apple Silicon</strong>
+            <small>适用于 M1 / M2 / M3 / M4</small>
+            <span class="download-arrow" aria-hidden="true">↓</span>
+          </a>
+          <a class="download-card" href="https://github.com/guoba371/LegalMask/releases/latest/download/LegalMask-macOS-Intel.zip">
+            <span class="download-kicker">INTEL 芯片</span>
+            <strong>Intel Mac</strong>
+            <small>支持 macOS 12 及以上</small>
+            <span class="download-arrow" aria-hidden="true">↓</span>
+          </a>
+          <div class="download-help">
+            <p><strong>Mac 用户：</strong>解压后把 LegalMask 拖进“应用程序”。首次打开请按住 Control 点按图标，再选择“打开”；如果系统没有显示“打开”选项，请前往“系统设置 → 隐私与安全性”点击“仍要打开”。</p>
+            <p>不确定芯片类型？点击左上角苹果菜单 →“关于本机”查看“芯片”或“处理器”。</p>
           </div>
-          <pre><code><span class="cmd">git</span> clone https://github.com/guoba371/LegalMask.git
-<span class="cmd">cd</span> LegalMask
-<span class="cmd">python</span> -m venv .venv
-.<span class="cmd">venv\Scripts\activate</span>
-<span class="cmd">pip</span> install -r requirements.txt
-<span class="cmd">streamlit</span> run app.py</code></pre>
-          <p class="terminal-note">浏览器打开 <strong>127.0.0.1:8501</strong></p>
+          <div class="download-links">
+            <a href="https://github.com/guoba371/LegalMask/releases/latest/download/LegalMask-Windows-x64.zip">Windows 免安装便携版</a>
+            <a href="https://github.com/guoba371/LegalMask">浏览源码</a>
+          </div>
         </div>
       </div>
     </section>

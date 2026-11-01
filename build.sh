@@ -1,11 +1,4 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+set -euo pipefail
 
-echo "🔧 安装依赖..."
-pip3 install -r requirements.txt
-
-echo "📦 PyInstaller打包..."
-python3 -m PyInstaller LegalMask.spec --clean
-
-echo "✅ 完成！产物在 dist/LegalMask"
-echo "macOS用户：直接双击 dist/LegalMask 运行"
+exec "$(cd "$(dirname "$0")" && pwd)/scripts/build_macos.sh" "$@"
