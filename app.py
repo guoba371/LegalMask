@@ -39,6 +39,9 @@ _THEME = {
     "accent": "#2563eb",
     "accent_hover": "#3b82f6",
     "accent_text": "#ffffff",
+    "disabled_bg": "#203852",
+    "disabled_text": "#f1f6ff",
+    "disabled_border": "#4d6b89",
     "tab_list": "#0d1a2a",
     "tab_text": "#bdcce0",
     "tab_selected": "#2563eb",
@@ -61,6 +64,9 @@ _THEME = {
     "accent": "#0b1f3a",
     "accent_hover": "#163d6e",
     "accent_text": "#ffffff",
+    "disabled_bg": "#d8e6f5",
+    "disabled_text": "#14385f",
+    "disabled_border": "#a9c4dd",
     "tab_list": "#ffffff",
     "tab_text": "#3f5068",
     "tab_selected": "#0b1f3a",
@@ -235,6 +241,21 @@ html, body { background: var(--lm-bg) !important; }
     box-shadow: 0 6px 18px var(--lm-shadow) !important;
 }
 .stButton > button:active { transform: translateY(0) !important; }
+.stButton > button:disabled,
+.stButton > button:disabled:hover {
+    background: var(--lm-disabled-bg) !important;
+    color: var(--lm-disabled-text) !important;
+    border: 1px solid var(--lm-disabled-border) !important;
+    opacity: 1 !important;
+    cursor: wait !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+.stButton > button:disabled *,
+.stButton > button:disabled:hover * {
+    color: var(--lm-disabled-text) !important;
+    -webkit-text-fill-color: var(--lm-disabled-text) !important;
+}
 
 /* download buttons get a softer look */
 [data-testid="stDownloadButton"] > button {
