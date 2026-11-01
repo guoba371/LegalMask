@@ -40,8 +40,9 @@ streamlit run app.py
 ### 分层脱敏引擎（`core/processor.py`）
 
 ```
+手动补充 — 自定义字段/词条   [X1]/[X2] 占位，按原文精确匹配
 Layer 0   — 法条保护         第X条/第X款 → __LAW_N__ 占位，处理后还原
-Layer 0.5 — 指代消解         扫描姓名 → 分配甲方/乙方/丙方，全文统一替换
+Layer 0.5 — 指代消解         扫描姓名 → 分配 [P1]/[P2] 编号，全文统一替换
 Layer 1   — 唯一标识         身份证号、手机号、统一社会信用代码
 Layer 2   — 金额             万元/亿元/元，含百分比
 Layer 3   — 案号             （YYYY）X民初XXXXX号，含 mapping 还原
@@ -56,7 +57,8 @@ Layer 9   — 还原法条         __LAW_N__ → 原始法条引用
 ### 格式保留
 
 - **DOCX**：Run-by-run 处理，保留字体、加粗、颜色等格式
-- **PDF**：Block-by-block 处理（需含文字层）
+- **PDF**：保留原版式，页面以高分辨率图像保存，并附可检索文字层；嵌入式 Logo、印章和签名图会被白底遮盖
+- **手动补充字段**：界面上每行填写一个漏检的人名、项目代号或编号，适用于 DOCX、文字版/扫描版 PDF
 
 ### 完整双向流程
 
@@ -76,8 +78,8 @@ AI 返回文本 → [还原] → 含真实姓名的分析结论
 |------|------|---------|
 | `.docx` | ✅ | ✅ Run-by-run |
 | `.pdf`（文字层）| ✅ | ✅ Block-by-block |
+| 扫描版 PDF | ✅ 本地 OCR | ✅ 页面图像保留 |
 | `.txt` / `.md` | ✅ | 纯文本 |
-| 扫描版 PDF | ❌ 需先 OCR | — |
 
 ---
 
@@ -86,11 +88,16 @@ AI 返回文本 → [还原] → 含真实姓名的分析结论
 ```python
 from core.processor import process_document, restore_text, load_mapping
 
-# 脱敏单个文件
-result = process_document("contract.docx", output_dir="./out")
+# 脱敏单个文件（可选：补充自动识别遗漏的字段）
+result = process_document(
+    "contract.docx",
+    output_dir="./out",
+    custom_terms=["星河计划", "ZX-7788"],
+)
 # result.output_file  → 脱敏后文件路径
 # result.mapping_file → mapping JSON 路径
 # result.entity_count → 脱敏实体数量
+# result.ocr_page_count → 使用本地 OCR 的扫描页数量
 
 # 还原 AI 分析结果
 mapping = load_mapping(result.mapping_file)
@@ -101,7 +108,9 @@ restored = restore_text(ai_analysis_text, mapping)
 
 ## 已知限制
 
-- 扫描版 PDF（图片型）暂不支持，需含可选中文字层
+- 扫描版 PDF 使用 RapidOCR + ONNX Runtime 在本机识别，首次加载模型或页数较多时会较慢
+- OCR 对模糊、倾斜、手写或低分辨率扫描件可能存在识别误差，需人工核查
+- PDF 输出为版式保真图像 + 可检索文字层，文件体积会大于原文件
 - 建议人工核查脱敏结果，确认无遗漏实体
 - 极复杂嵌套法条引用（如"第87条第2款第3项"）可能需要手动校验
 
