@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="LegalMask 是一款完全本地运行的中文法律文书脱敏工具，支持 DOCX、文字版与扫描版 PDF。">
+  <meta name="theme-color" content="#102a36">
+  <title>LegalMask｜中文法律文书本地脱敏</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="paper-noise" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="LegalMask 首页">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" role="img">
+          <path d="M24 4 41 11v12c0 10.4-6.8 17.7-17 21-10.2-3.3-17-10.6-17-21V11L24 4Z" fill="currentColor"/>
+          <path d="M16.5 23.5 22 29l10-11" fill="none" stroke="#f4efe3" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.2"/>
+        </svg>
+      </span>
+      <span class="brand-name">Legal<span>Mask</span></span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="#features">能力</a>
+      <a href="#workflow">流程</a>
+      <a href="#start">开始使用</a>
+    </nav>
+    <a class="nav-github" href="https://github.com/guoba371/LegalMask" aria-label="查看 GitHub 源码">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .8a11.2 11.2 0 0 0-3.5 21.8c.6.1.8-.2.8-.5v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.2 11.2 0 0 1 6 0C17.5 4.3 18.5 4.6 18.5 4.6c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.1c0 .3.2.6.8.5A11.2 11.2 0 0 0 12 .8Z"/></svg>
+      <span>GitHub</span>
+    </a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span>LOCAL-FIRST LEGAL REDACTION</p>
+        <h1>把敏感信息<br>留在<em>你的电脑里。</em></h1>
+        <p class="hero-lead">LegalMask 为中文法律文书提供可逆脱敏。自动识别姓名、案号、地址与证件信息，也支持扫描版 PDF 和人工补充字段。</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="https://github.com/guoba371/LegalMask/archive/refs/heads/main.zip">
+            下载 LegalMask
+            <span aria-hidden="true">↘</span>
+          </a>
+          <a class="button button-secondary" href="#start">查看运行方式</a>
+        </div>
+        <ul class="trust-list" aria-label="产品特点">
+          <li><span>✓</span> 文件不上传</li>
+          <li><span>✓</span> OCR 本地运行</li>
+          <li><span>✓</span> Mapping 可还原</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual" aria-label="脱敏文档示意图">
+        <div class="case-tab">CASE / 2026</div>
+        <article class="document">
+          <div class="document-head">
+            <div>
+              <p>民事起诉状</p>
+              <span>证据材料 · 脱敏副本</span>
+            </div>
+            <span class="seal">隐</span>
+          </div>
+          <div class="document-rule"></div>
+          <p class="document-label">当事人</p>
+          <p>原告：<mark>[P1]</mark>，男，<mark>[D1]</mark>出生。</p>
+          <p>住址：<mark>[A1]</mark></p>
+          <p class="document-label">联系信息</p>
+          <p>联系电话：<mark>[PH1]</mark></p>
+          <p>内部项目：<mark class="manual-mark">[X1]</mark></p>
+          <div class="document-rule"></div>
+          <p class="legal-copy">根据《中华人民共和国民法典》第667条，原告主张被告履行还款义务。</p>
+          <div class="document-footer">
+            <span>LOCAL PROCESS</span>
+            <span>PAGE 01 / 01</span>
+          </div>
+        </article>
+        <div class="ocr-chip">
+          <span class="pulse"></span>
+          本地 OCR 已完成
+        </div>
+        <div class="manual-chip">
+          <span>+</span>
+          人工补充字段
+        </div>
+      </div>
+    </section>
+
+    <section class="privacy-band" aria-label="隐私原则">
+      <p>YOUR FILE STAYS HERE</p>
+      <span aria-hidden="true">✳</span>
+      <p>AI SEES ONLY PLACEHOLDERS</p>
+      <span aria-hidden="true">✳</span>
+      <p>NO CLOUD PROCESSING</p>
+    </section>
+
+    <section class="section features" id="features">
+      <div class="section-heading">
+        <p class="section-index">01 / CAPABILITIES</p>
+        <h2>不是遮住文字，<br>而是让文书<em>安全地继续工作。</em></h2>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card feature-card-dark">
+          <span class="feature-number">01</span>
+          <div class="feature-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48"><path d="M8 9h32v30H8z"/><path d="M15 18h18M15 25h14M15 32h9"/></svg>
+          </div>
+          <h3>中文法律语境识别</h3>
+          <p>识别原告、被告、代理人、案号、地址、金额和法条引用，保留“第667条”等关键法律信息。</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-number">02</span>
+          <div class="feature-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48"><path d="M12 6h18l8 8v28H12z"/><path d="M30 6v9h8M18 24h15M18 31h12"/></svg>
+          </div>
+          <h3>版式与格式保留</h3>
+          <p>DOCX 跨 Run 替换不破坏字体和加粗；PDF 保留页面版式，并生成可搜索的隐藏文字层。</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-number">03</span>
+          <div class="feature-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48"><path d="M38 17a15 15 0 1 0 1 13"/><path d="M38 8v10H28"/></svg>
+          </div>
+          <h3>双向还原</h3>
+          <p>每次脱敏生成独立 Mapping。AI 返回分析结果后，可将 [P1]、[A1]、[X1] 一键还原为真实信息。</p>
+        </article>
+      </div>
+      <div class="feature-ribbon">
+        <div><strong>扫描版 PDF</strong><span>RapidOCR + ONNX Runtime</span></div>
+        <div><strong>手动补充字段</strong><span>自动识别遗漏也能补</span></div>
+        <div><strong>批量处理</strong><span>同名文件不互相覆盖</span></div>
+        <div><strong>隐私清理</strong><span>文件名与文档元数据同步处理</span></div>
+      </div>
+    </section>
+
+    <section class="section workflow" id="workflow">
+      <div class="workflow-copy">
+        <p class="section-index">02 / WORKFLOW</p>
+        <h2>三步完成<br><em>安全 AI 分析。</em></h2>
+        <p>脱敏在本地完成，提交给 AI 的只有占位符。分析结束后再用 Mapping 还原真实姓名。</p>
+        <a class="text-link" href="https://github.com/guoba371/LegalMask">查看完整源码 <span>↗</span></a>
+      </div>
+      <ol class="workflow-steps">
+        <li>
+          <span class="step-number">01</span>
+          <div>
+            <h3>上传并脱敏</h3>
+            <p>选择 DOCX 或 PDF；可手动补充项目代号、内部编号等漏检字段。</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-number">02</span>
+          <div>
+            <h3>提交 AI 分析</h3>
+            <p>下载脱敏文件，交给任意 AI 工具分析，文件中不再包含真实当事人信息。</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-number">03</span>
+          <div>
+            <h3>还原真实信息</h3>
+            <p>加载 Mapping，将 AI 报告中的占位符批量替换回原始字段。</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="section start" id="start">
+      <div class="start-card">
+        <div class="start-copy">
+          <p class="section-index">03 / GET STARTED</p>
+          <h2>在你的电脑上运行。</h2>
+          <p>GitHub Pages 仅承载这个项目介绍页。LegalMask 是本地 Streamlit 应用，扫描件和原始文书不会进入浏览器之外的服务器。</p>
+          <div class="start-actions">
+            <a class="button button-light" href="https://github.com/guoba371/LegalMask/archive/refs/heads/main.zip">下载源码 ZIP <span>↘</span></a>
+            <a class="button button-ghost" href="https://github.com/guoba371/LegalMask">浏览仓库</a>
+          </div>
+        </div>
+        <div class="terminal" aria-label="本地运行命令">
+          <div class="terminal-bar">
+            <span></span><span></span><span></span>
+            <p>PowerShell</p>
+          </div>
+          <pre><code><span class="cmd">git</span> clone https://github.com/guoba371/LegalMask.git
+<span class="cmd">cd</span> LegalMask
+<span class="cmd">python</span> -m venv .venv
+.<span class="cmd">venv\Scripts\activate</span>
+<span class="cmd">pip</span> install -r requirements.txt
+<span class="cmd">streamlit</span> run app.py</code></pre>
+          <p class="terminal-note">浏览器打开 <strong>127.0.0.1:8501</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section note">
+      <div>
+        <p class="section-index">IMPORTANT NOTE</p>
+        <h2>仍需人工复核。</h2>
+      </div>
+      <p>OCR 对模糊、倾斜、手写或低分辨率扫描件可能存在识别误差。提交 AI 前，请检查脱敏结果并确认没有遗漏实体。程序被强制终止时，退出清理无法保证执行。</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <span class="brand-name">Legal<span>Mask</span></span>
+      <p>中文法律文书本地脱敏工具</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/guoba371/LegalMask">GitHub</a>
+      <a href="https://github.com/guoba371/LegalMask/blob/main/README_%E7%94%A8%E6%88%B7.md">用户手册</a>
+      <a href="https://github.com/guoba371/LegalMask/blob/main/LICENSE">License</a>
+    </div>
+    <p class="footer-meta">© 2026 LegalMask · Built for privacy.</p>
+  </footer>
+</body>
+</html>
