@@ -34,3 +34,6 @@ legalmask_*/
 
 # Secrets
 .env
+
+# Local release test output
+.tmp-release/
