@@ -122,7 +122,7 @@ if is_darwin:
         info_plist={
             "CFBundleDisplayName": "LegalMask",
             "CFBundleName": "LegalMask",
-            "CFBundleShortVersionString": "1.0.4",
+            "CFBundleShortVersionString": "1.0.5",
             "CFBundleVersion": "1",
             "LSMinimumSystemVersion": "12.0",
             "NSHighResolutionCapable": True,
