@@ -211,14 +211,33 @@ def _load_desktop_application(
     window,
     server: DesktopServer,
     log_path: Path,
-    navigation_timeout: float = 30.0,
+    navigation_timeout: float = 60.0,
 ) -> None:
     try:
+        logging.info("Waiting for Streamlit server to be ready...")
         server.wait_until_ready()
+        logging.info(f"Server ready at {server.url}, loading URL in window...")
         window.load_url(server.url)
-        if not window.events.loaded.wait(navigation_timeout):
+        
+        # Poll window.evaluate_js to confirm page actually loaded
+        # (window.events.loaded is unreliable on some macOS/pywebview combinations)
+        logging.info("Waiting for page to load...")
+        deadline = time.monotonic() + navigation_timeout
+        page_loaded = False
+        while time.monotonic() < deadline:
+            try:
+                result = window.evaluate_js("document.readyState")
+                if result in ("interactive", "complete"):
+                    logging.info(f"Page loaded successfully (readyState={result})")
+                    page_loaded = True
+                    break
+            except Exception:
+                pass
+            time.sleep(0.5)
+        
+        if not page_loaded:
             raise TimeoutError(
-                f"LegalMask 页面加载超时（{server.url}）。请查看日志后重试。"
+                f"LegalMask 页面加载超时（{server.url}，{navigation_timeout}秒）。请查看日志后重试。"
             )
     except Exception as exc:
         logging.exception("Unable to load LegalMask UI")

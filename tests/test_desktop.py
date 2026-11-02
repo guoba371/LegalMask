@@ -19,6 +19,7 @@ class _FakeWindow:
     def __init__(self, loaded=True):
         self.loaded_url = None
         self.loaded_html = None
+        self._page_loaded = loaded
         loaded_event = _LoadedEvent() if loaded else _NeverLoadedEvent()
         self.events = type("Events", (), {"loaded": loaded_event})()
 
@@ -27,6 +28,11 @@ class _FakeWindow:
 
     def load_html(self, content):
         self.loaded_html = content
+    
+    def evaluate_js(self, script):
+        if self._page_loaded:
+            return "complete"
+        raise Exception("Page not loaded")
 
 
 class _FakeServer:

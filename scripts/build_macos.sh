@@ -5,7 +5,7 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
 export MACOSX_DEPLOYMENT_TARGET="${MACOSX_DEPLOYMENT_TARGET:-12.0}"
-APP_VERSION="1.0.2"
+APP_VERSION="1.0.3"
 
 python3 -m pip install --upgrade pip
 python3 -m pip install -r requirements-build.txt
