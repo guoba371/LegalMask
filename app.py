@@ -60,7 +60,7 @@ _THEME = {
     "text": "#172033",
     "heading": "#0b1f3a",
     "muted": "#5f6f84",
-    "border": "#dbe4ef",
+    "border": "#b9c8dc",
     "accent": "#0b1f3a",
     "accent_hover": "#163d6e",
     "accent_text": "#ffffff",
@@ -170,7 +170,7 @@ html, body { background: var(--lm-bg) !important; }
 .badge-blue  { background:rgba(96,165,250,0.18); border:1px solid rgba(96,165,250,0.35); color:#93c5fd; }
 .badge-gold  { background:rgba(251,191,36,0.15); border:1px solid rgba(251,191,36,0.3);  color:#fcd34d; }
 .badge-green { background:rgba(52,211,153,0.15); border:1px solid rgba(52,211,153,0.3);  color:#6ee7b7; }
-.badge-gray  { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.7); }
+.badge-gray  { background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.32);color:rgba(255,255,255,0.94); }
 .hero-notice {
     margin-top: 22px;
     font-size: 11.5px;
@@ -271,10 +271,20 @@ html, body { background: var(--lm-bg) !important; }
     transform: none !important;
     box-shadow: none !important;
 }
-[data-testid="stDownloadButton"][data-testid*="zip"] > button,
-[data-testid="stDownloadButton"].primary > button {
+[data-testid="stDownloadButton"] > button[data-testid="stBaseButton-primary"] {
     background: var(--lm-accent) !important;
     color: var(--lm-accent-text) !important;
+    border: 1px solid var(--lm-accent) !important;
+}
+[data-testid="stDownloadButton"] > button[data-testid="stBaseButton-primary"]:hover {
+    background: var(--lm-accent-hover) !important;
+}
+/* Streamlit renders button labels in nested elements with its own theme color; force the app theme. */
+.stButton > button *,
+[data-testid="stDownloadButton"] > button *,
+[data-testid="stFileUploader"] button * {
+    color: inherit !important;
+    -webkit-text-fill-color: currentColor !important;
 }
 
 /* ── File Uploader ── */
@@ -416,8 +426,8 @@ hr { border-color: var(--lm-border) !important; margin: 20px 0 !important; }
 [data-testid="stCaptionContainer"] {
     color: var(--lm-text);
 }
-.hero .hero-sub { color: rgba(255,255,255,0.72) !important; }
-.hero .hero-notice { color: rgba(255,255,255,0.48) !important; }
+.hero .hero-sub { color: rgba(255,255,255,0.88) !important; }
+.hero .hero-notice { color: rgba(255,255,255,0.82) !important; font-size: 12.5px !important; }
 .hero .hero-title { color: #ffffff !important; }
 [data-testid="stAlert"] {
     background: var(--lm-surface-soft) !important;
