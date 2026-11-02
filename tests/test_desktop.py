@@ -20,6 +20,7 @@ class _FakeWindow:
         self.loaded_url = None
         self.loaded_html = None
         self._page_loaded = loaded
+        self._js_call_count = 0
         loaded_event = _LoadedEvent() if loaded else _NeverLoadedEvent()
         self.events = type("Events", (), {"loaded": loaded_event})()
 
@@ -30,6 +31,11 @@ class _FakeWindow:
         self.loaded_html = content
     
     def evaluate_js(self, script):
+        self._js_call_count += 1
+        # First call is the test (1+1), always succeed
+        if self._js_call_count == 1:
+            return 2
+        # Subsequent calls check document.readyState
         if self._page_loaded:
             return "complete"
         raise Exception("Page not loaded")

@@ -5,4 +5,4 @@ rapidocr_onnxruntime==1.4.4
 numpy<2; sys_platform == "darwin"
 onnxruntime==1.19.2; sys_platform == "darwin"
 onnxruntime==1.31.1; sys_platform != "darwin"
-pywebview==6.2.1
+pywebview==5.1

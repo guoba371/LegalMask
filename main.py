@@ -217,34 +217,55 @@ def _load_desktop_application(
         logging.info("Waiting for Streamlit server to be ready...")
         server.wait_until_ready()
         logging.info(f"Server ready at {server.url}, loading URL in window...")
-        window.load_url(server.url)
         
-        # Poll window.evaluate_js to confirm page actually loaded
-        # (window.events.loaded is unreliable on some macOS/pywebview combinations)
-        logging.info("Waiting for page to load...")
+        # Test WebView JS engine before loading URL
+        try:
+            test_result = window.evaluate_js("1+1")
+            logging.info(f"WebView JS test: 1+1={test_result}")
+        except Exception as e:
+            logging.error(f"WebView JS engine test failed: {e}")
+            raise RuntimeError("WebView JavaScript 引擎初始化失败") from e
+        
+        # Load URL
+        window.load_url(server.url)
+        logging.info("URL loaded, waiting for page ready...")
+        
+        # Poll document.readyState with detailed logging
         deadline = time.monotonic() + navigation_timeout
         page_loaded = False
+        last_state = None
+        attempts = 0
+        
         while time.monotonic() < deadline:
             try:
                 result = window.evaluate_js("document.readyState")
+                attempts += 1
+                
+                if result != last_state:
+                    logging.info(f"readyState changed: {last_state} -> {result} (attempt {attempts})")
+                    last_state = result
+                
                 if result in ("interactive", "complete"):
-                    logging.info(f"Page loaded successfully (readyState={result})")
+                    logging.info(f"Page loaded successfully (readyState={result}, {attempts} attempts)")
                     page_loaded = True
                     break
-            except Exception:
-                pass
+            except Exception as e:
+                if attempts % 10 == 1:  # Log every 10th error to avoid spam
+                    logging.warning(f"Error checking readyState (attempt {attempts}): {e}")
+            
             time.sleep(0.5)
         
         if not page_loaded:
+            logging.error(f"Page load timeout after {attempts} attempts, last_state={last_state}")
             raise TimeoutError(
                 f"LegalMask 页面加载超时（{server.url}，{navigation_timeout}秒）。请查看日志后重试。"
             )
     except Exception as exc:
-        logging.exception("Unable to load LegalMask UI")
+        logging.exception(f"Failed to load LegalMask UI: {exc}")
         try:
             window.load_html(_error_html(str(exc), log_path))
-        except Exception:
-            logging.exception("Unable to display startup error")
+        except Exception as e2:
+            logging.exception(f"Failed to display error page: {e2}")
 
 
 def _show_browser_fallback(server: DesktopServer) -> None:
