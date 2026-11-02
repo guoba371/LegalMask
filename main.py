@@ -207,6 +207,27 @@ def _error_html(message: str, log_path: Path) -> str:
 """
 
 
+def _load_desktop_application(
+    window,
+    server: DesktopServer,
+    log_path: Path,
+    navigation_timeout: float = 30.0,
+) -> None:
+    try:
+        server.wait_until_ready()
+        window.load_url(server.url)
+        if not window.events.loaded.wait(navigation_timeout):
+            raise TimeoutError(
+                f"LegalMask 页面加载超时（{server.url}）。请查看日志后重试。"
+            )
+    except Exception as exc:
+        logging.exception("Unable to load LegalMask UI")
+        try:
+            window.load_html(_error_html(str(exc), log_path))
+        except Exception:
+            logging.exception("Unable to display startup error")
+
+
 def _show_browser_fallback(server: DesktopServer) -> None:
     try:
         server.wait_until_ready(timeout=30)
@@ -276,27 +297,12 @@ def _run_desktop() -> int:
             confirm_close=False,
         )
 
-        def load_application() -> None:
-            try:
-                server.wait_until_ready()
-                window.load_url(server.url)
-            except Exception as exc:
-                logging.exception("Unable to load LegalMask UI")
-                try:
-                    window.load_html(_error_html(str(exc), log_path))
-                except Exception:
-                    logging.exception("Unable to display startup error")
-
-        threading.Thread(
-            target=load_application,
-            name="LegalMaskLoader",
-            daemon=True,
-        ).start()
-
         icon_path = _resource_path(
             "assets/icon.ico" if sys.platform == "win32" else "assets/icon.png"
         )
         webview.start(
+            _load_desktop_application,
+            args=(window, server, log_path),
             debug=os.environ.get("LEGALMASK_DEBUG") == "1",
             private_mode=False,
             storage_path=str(_user_data_dir() / "webview"),

@@ -1,5 +1,5 @@
 #define MyAppName "LegalMask"
-#define MyAppVersion "1.0.1"
+#define MyAppVersion "1.0.2"
 #define MyAppPublisher "LegalMask"
 #define MyAppExeName "LegalMask.exe"
 

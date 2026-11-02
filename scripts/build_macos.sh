@@ -5,6 +5,7 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
 export MACOSX_DEPLOYMENT_TARGET="${MACOSX_DEPLOYMENT_TARGET:-12.0}"
+APP_VERSION="1.0.2"
 
 python3 -m pip install --upgrade pip
 python3 -m pip install -r requirements-build.txt
@@ -17,6 +18,10 @@ codesign --verify --deep --strict "$APP"
 
 plutil -extract LSMinimumSystemVersion raw "$APP/Contents/Info.plist" |
   grep -qx "$MACOSX_DEPLOYMENT_TARGET"
+plutil -extract CFBundleShortVersionString raw "$APP/Contents/Info.plist" |
+  grep -qx "$APP_VERSION"
+plutil -extract NSAppTransportSecurity.NSAllowsLocalNetworking raw "$APP/Contents/Info.plist" |
+  grep -qx "true"
 "$APP/Contents/MacOS/LegalMask" --smoke-test
 
 case "$(uname -m)" in

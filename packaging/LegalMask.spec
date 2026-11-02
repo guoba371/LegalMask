@@ -122,10 +122,13 @@ if is_darwin:
         info_plist={
             "CFBundleDisplayName": "LegalMask",
             "CFBundleName": "LegalMask",
-            "CFBundleShortVersionString": "1.0.1",
+            "CFBundleShortVersionString": "1.0.2",
             "CFBundleVersion": "1",
             "LSMinimumSystemVersion": "12.0",
             "NSHighResolutionCapable": True,
+            "NSAppTransportSecurity": {
+                "NSAllowsLocalNetworking": True,
+            },
             "NSDocumentsFolderUsageDescription": "LegalMask 需要读取您选择的文书文件。",
             "NSDownloadsFolderUsageDescription": "LegalMask 需要保存脱敏后的文书文件。",
         },

@@ -1,7 +1,39 @@
 import socket
 import unittest
+from pathlib import Path
 
-from main import DesktopServer, _find_free_port
+from main import DesktopServer, _find_free_port, _load_desktop_application
+
+
+class _NeverLoadedEvent:
+    def wait(self, timeout):
+        return False
+
+
+class _LoadedEvent:
+    def wait(self, timeout):
+        return True
+
+
+class _FakeWindow:
+    def __init__(self, loaded=True):
+        self.loaded_url = None
+        self.loaded_html = None
+        loaded_event = _LoadedEvent() if loaded else _NeverLoadedEvent()
+        self.events = type("Events", (), {"loaded": loaded_event})()
+
+    def load_url(self, url):
+        self.loaded_url = url
+
+    def load_html(self, content):
+        self.loaded_html = content
+
+
+class _FakeServer:
+    url = "http://127.0.0.1:54321"
+
+    def wait_until_ready(self, timeout=60):
+        self.ready_timeout = timeout
 
 
 class DesktopLauncherTests(unittest.TestCase):
@@ -18,6 +50,32 @@ class DesktopLauncherTests(unittest.TestCase):
             self.assertIn("127.0.0.1", server.url)
         finally:
             server.stop()
+
+    def test_failed_page_navigation_shows_error_instead_of_blank_window(self):
+        window = _FakeWindow(loaded=False)
+        server = _FakeServer()
+
+        with self.assertLogs(level="ERROR"):
+            _load_desktop_application(
+                window,
+                server,
+                Path("legalmask.log"),
+                navigation_timeout=0.1,
+            )
+
+        self.assertEqual(window.loaded_url, server.url)
+        self.assertIsNotNone(window.loaded_html)
+        self.assertIn("LegalMask 启动失败", window.loaded_html)
+        self.assertIn("legalmask.log", window.loaded_html)
+
+    def test_loaded_page_remains_open_without_error_fallback(self):
+        window = _FakeWindow()
+        server = _FakeServer()
+
+        _load_desktop_application(window, server, Path("legalmask.log"))
+
+        self.assertEqual(window.loaded_url, server.url)
+        self.assertIsNone(window.loaded_html)
 
 
 if __name__ == "__main__":
