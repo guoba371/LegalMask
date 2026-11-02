@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from PyInstaller.utils.hooks import collect_all, copy_metadata
+from PyInstaller.utils.hooks import collect_all, copy_metadata, collect_data_files
 from PyInstaller.compat import is_darwin, is_win
 
 
@@ -13,6 +13,20 @@ datas = [
     (str(ROOT / "assets" / "icon.png"), "assets"),
     (str(ROOT / "assets" / "icon.ico"), "assets"),
 ]
+
+# Explicitly include RapidOCR model files
+try:
+    import rapidocr_onnxruntime
+    import os
+    rapidocr_pkg_dir = os.path.dirname(rapidocr_onnxruntime.__file__)
+    rapidocr_models_dir = os.path.join(rapidocr_pkg_dir, "models")
+    if os.path.exists(rapidocr_models_dir):
+        for model_file in os.listdir(rapidocr_models_dir):
+            if model_file.endswith(".onnx"):
+                model_path = os.path.join(rapidocr_models_dir, model_file)
+                datas.append((model_path, "rapidocr_onnxruntime/models"))
+except ImportError:
+    pass
 binaries = []
 hiddenimports = [
     "core",
@@ -133,3 +147,4 @@ if is_darwin:
             "NSDownloadsFolderUsageDescription": "LegalMask 需要保存脱敏后的文书文件。",
         },
     )
+
